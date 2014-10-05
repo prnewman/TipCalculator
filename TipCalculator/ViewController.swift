@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import <TipCalculatorModel>
 
 class ViewController: UIViewController {
 
@@ -17,8 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var resultsTextView: UITextView!
     @IBOutlet weak var submitButton: UIButton!
     
-    //let tipCalc = TipCalculatorModel(total: 33.25, taxPct: 0.06)
-    let tipCalc = TipCalculatorModel(total: 100.00, taxPct: 0.10)
+    let tipCalculator = TipCalculatorModel(total: 100.00, taxPct: 0.10)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +32,9 @@ class ViewController: UIViewController {
     
     func refreshUI() {
         // 1
-        totalTextField.text = String(format: "%0.2f", tipCalc.total)
+        totalTextField.text = String(format: "%0.2f", tipCalculator.total)
         // 2
-        taxPctSlider.value = Float(tipCalc.taxPct) * 100.0
+        taxPctSlider.value = Float(tipCalculator.taxPct) * 100.0
         // 3
         taxPctLabel.text = "Tax Percent (\(Int(taxPctSlider.value))%):"
         // 4
@@ -49,9 +47,9 @@ class ViewController: UIViewController {
         
         // 1
         let total:NSString = totalTextField.text
-        tipCalc.total = total.doubleValue
+        tipCalculator.total = total.doubleValue
         // 2
-        let possibleTips = tipCalc.returnPossibleTips()
+        let possibleTips = tipCalculator.returnPossibleTips()
         var results = ""
         // 3
         for (tipPct, tipValue) in possibleTips {
@@ -64,12 +62,11 @@ class ViewController: UIViewController {
     
     @IBAction func sliderChanged(sender : AnyObject) {
         
-        println("\(Int(self.taxPctSlider.value))");
-        
         let slider:UISlider = (sender as UISlider);
-        tipCalc.taxPct = Double(slider.value) / 100.0
+        tipCalculator.taxPct = Double(slider.value) / 100.0
 
-        println("\(tipCalc.taxPct)");
+//        println("\(Int(slider.value))");
+//        println("\(tipCalculator.taxPct)");
 
         refreshUI()
     }
